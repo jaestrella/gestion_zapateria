@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Cliente JS y HTML5 para recibir datos del servicio RSET</title>
+    </head>
+    <body>
+        <script>
+            var request = new XMLHttpRequest();
+
+            request.addEventListener("readystatechange", processRequest, false);
+            request.open("GET", "//localhost:8080/rest/cliente");
+            
+
+            request.send();
+
+            function processRequest(e){
+                if(request.readyState == 4 && request.status==200){
+                    var response = JSON.parse(request.response.Text);
+                    if(response.length > 0){
+                        document.write("<p>Total Objects Returned=" + response.length + "</p>");
+                        for(var i = 0;i<response.length;i++){
+                            printObject(response[i]);
+                        }
+                    }
+                }
+                else if (reques.readyState == 4){
+                    document.write("<p>Error:" + request.status + "," + request.statusText);
+                }
+            }
+
+            function printObject(jsonObject){
+                document.write("<hr/>");
+                document.write("<p>Id cliente=" + jsonObject.id + "</p>");
+                document.write("<p>Nombre cliente=" + jsonObject.nombre + "</p>");
+                document.write("<p>Apellidos cliente=" + jsonObject.apellidos + "</p>");
+                document.write("<p>Direccion cliente=" + jsonObject.direcciones + "</p>");
+                document.write("<p>Tipo via cliente=" + jsonObject.direcciones.tipo_via + "</p>");
+                document.write("<p>Nombre via cliente=" + jsonObject.direcciones.nombre_via + "</p>");
+                document.write("<p>Codigo postal cliente=" + jsonObject.direcciones.cp.cp + "</p>");
+                document.write("<p>Localidad cliente=" + jsonObject.direcciones.cp.localidad + "</p>"); 
+
+                document.write("<hr/>");
+            }
+        
+        </script>
+    </body>
+</html>
